@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Результат</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            margin: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .result-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .weather-box {
+            width: 48%;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .weather-box h2 {
+            text-align: center;
+        }
+        .weather-box p {
+            font-size: 16px;
+        }
+        .good-weather {
+            color: green;
+            font-weight: bold;
+        }
+        .bad-weather {
+            color: red;
+            font-weight: bold;
+        }
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Результат проверки погоды</h1>
+</header>
+
+<div class="container">
+    <div class="result-container">
+        <div class="weather-box">
+            <h2>Город отправления: {{ result.start_city }}</h2>
+            <p>Температура: {{ result.start_weather.temperature_celsius }} °C</p>
+            <p>Влажность: {{ result.start_weather.humidity }}%</p>
+            <p>Скорость ветра: {{ result.start_weather.wind_speed_kph }} км/ч</p>
+            <p>Вероятность осадков: {{ result.start_weather.precipitation_probability }}%</p>
+            <p class="{% if result.start_bad_weather %}bad-weather{% else %}good-weather{% endif %}">
+                {% if result.start_bad_weather %}Анлак - плохая погода{% else %}Эта погода просто имба{% endif %}
+            </p>
+        </div>
+
+        <div class="weather-box">
+            <h2>Город назначения: {{ result.end_city }}</h2>
+            <p>Температура: {{ result.end_weather.temperature_celsius }} °C</p>
+            <p>Влажность: {{ result.end_weather.humidity }}%</p>
+            <p>Скорость ветра: {{ result.end_weather.wind_speed_kph }} км/ч</p>
+            <p>Вероятность осадков: {{ result.end_weather.precipitation_probability }}%</p>
+            <p class="{% if result.end_bad_weather %}bad-weather{% else %}good-weather{% endif %}">
+                {% if result.end_bad_weather %}Анлак - плохая погода{% else %}Эта погода просто имба{% endif %}
+            </p>
+        </div>
+    </div>
+
+    <br><br>
+    <a href="/">Назад</a>
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Погодный сервис</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            margin: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .error {
+            color: red;
+            text-align: center;
+        }
+        .result-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .weather-box {
+            width: 48%;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .weather-box h2 {
+            text-align: center;
+        }
+        .weather-box p {
+            font-size: 16px;
+        }
+        .good-weather {
+            color: green;
+            font-weight: bold;
+        }
+        .bad-weather {
+            color: red;
+            font-weight: bold;
+        }
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Погодный сервис</h1>
+</header>
+
+<div class="container">
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+    <form method="POST">
+        <label for="start_city">Город отправления:</label>
+        <input type="text" id="start_city" name="start_city" required>
+
+        <label for="end_city">Город назначения:</label>
+        <input type="text" id="end_city" name="end_city" required>
+
+        <button type="submit">Получить погодные данные</button>
+    </form>
+
+    {% if result %}
+        <div class="result-container">
+            <div class="weather-box">
+                <h2>Город отправления: {{ result.start_city }}</h2>
+                <p>Температура: {{ result.start_weather.temperature_celsius }} °C</p>
+                <p>Влажность: {{ result.start_weather.humidity }}%</p>
+                <p>Скорость ветра: {{ result.start_weather.wind_speed_kph }} км/ч</p>
+                <p>Вероятность осадков: {{ result.start_weather.precipitation_probability }}%</p>
+                <p class="{% if result.start_bad_weather %}bad-weather{% else %}good-weather{% endif %}">
+                    {% if result.start_bad_weather %}Ой-ой, погода плохая{% else %}Погода — супер{% endif %}
+                </p>
+            </div>
+
+            <div class="weather-box">
+                <h2>Город назначения: {{ result.end_city }}</h2>
+                <p>Температура: {{ result.end_weather.temperature_celsius }} °C</p>
+                <p>Влажность: {{ result.end_weather.humidity }}%</p>
+                <p>Скорость ветра: {{ result.end_weather.wind_speed_kph }} км/ч</p>
+                <p>Вероятность осадков: {{ result.end_weather.precipitation_probability }}%</p>
+                <p class="{% if result.end_bad_weather %}bad-weather{% else %}good-weather{% endif %}">
+                    {% if result.end_bad_weather %}Ой-ой, погода плохая{% else %}Погода — супер{% endif %}
+                </p>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+
+
+</body>
+</html>
